@@ -12,7 +12,7 @@ class HomePage extends ConsumerWidget {
     final state = ref.watch(filmsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Riverpod 2.0')),
+      appBar: AppBar(title: const Text('Flutter Films')),
       body: SafeArea(
         child: Consumer(
           builder: (context, ref, child) {
