@@ -60,6 +60,33 @@ void main() {
                   (f) => f is ServerException && f.message == 'Bad Request')));
         },
       );
+      test(
+        'Should return an exception when a status code of 401 is recieved',
+        () async {
+          // Arrange
+          setUpMockDio('film_models.json', 401);
+          // Act
+          // Assert
+          expect(
+              () => filmsRemoteDataSourceImpl.getFilms(params: filmparams),
+              throwsA(predicate(
+                  (f) => f is ServerException && f.message == 'Unathorized')));
+        },
+      );
+      test(
+        'Should return an exception when a status code of 500 is recieved',
+        () async {
+          // Arrange
+          setUpMockDio('film_models.json', 500);
+          // Act
+          // Assert
+          expect(
+              () => filmsRemoteDataSourceImpl.getFilms(params: filmparams),
+              throwsA(predicate((f) =>
+                  f is ServerException &&
+                  f.message == 'Internal Server Error')));
+        },
+      );
     },
   );
 }

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class Film extends Equatable {
-  Film(
+  const Film(
       {required this.title,
       required this.episodeId,
       required this.openingCrawl,

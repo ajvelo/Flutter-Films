@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter_films/core/extensions/film_model_ext.dart';
 import 'package:flutter_films/data/models/film_model.dart';
 import 'package:flutter_films/domain/entities/film.dart';

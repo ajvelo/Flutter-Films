@@ -27,12 +27,16 @@ class FilmsRemoteDataSourceImpl implements FilmRemoteDataSource {
           return films;
         case 400:
           throw ServerException(message: 'Bad Request');
+        case 401:
+          throw ServerException(message: 'Unathorized');
+        case 500:
+          throw ServerException(message: 'Internal Server Error');
         default:
           throw ServerException(message: 'Error');
       }
-    } on TypeError catch (e) {
+    } on TypeError catch (_) {
       throw CastException(message: 'Cast Error');
-    } on UnsupportedError catch (e) {
+    } on UnsupportedError catch (_) {
       throw ServerException(message: 'Server Error');
     } catch (e) {
       rethrow;

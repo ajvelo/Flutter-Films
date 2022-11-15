@@ -32,7 +32,7 @@ class FilmLocalDataSourceImpl implements FilmLocalDataSource {
   }
 
   @override
-  toggleFilmAsFavorite(
+  Future<FilmModel> toggleFilmAsFavorite(
       {required String uid, required FilmsParams params}) async {
     final film =
         await filmHiveHelper.toggleFilmAsFavorite(uid: uid, params: params);

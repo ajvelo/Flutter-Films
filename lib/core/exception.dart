@@ -1,19 +1,30 @@
-abstract class DataException implements Exception {}
+import 'package:equatable/equatable.dart';
 
-class ServerException implements DataException {
+abstract class DataException extends Equatable implements Exception {}
+
+class ServerException extends DataException {
   final String message;
 
   ServerException({required this.message});
+
+  @override
+  List<Object?> get props => [message];
 }
 
-class CastException implements DataException {
+class CastException extends DataException {
   final String message;
 
   CastException({required this.message});
+
+  @override
+  List<Object?> get props => [message];
 }
 
-class CacheException implements DataException {
+class CacheException extends DataException {
   final String message;
 
   CacheException({required this.message});
+
+  @override
+  List<Object?> get props => [message];
 }
