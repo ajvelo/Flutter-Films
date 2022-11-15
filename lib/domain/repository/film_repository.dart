@@ -7,5 +7,5 @@ import '../usecases/films_usecase.dart';
 abstract class FilmRepository {
   Future<Either<Failure, List<Film>>> getFilms({required FilmsParams params});
   Future<Either<Failure, Film>> toggleFilmAsFavorite(
-      {required int episodeId, required FilmsParams params});
+      {required String uid, required FilmsParams params});
 }

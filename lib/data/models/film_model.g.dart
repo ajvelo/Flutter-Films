@@ -32,13 +32,14 @@ class FilmModelAdapter extends TypeAdapter<FilmModel> {
       edited: fields[12] as DateTime,
       url: fields[13] as String,
       isFavorite: fields[14] as bool,
+      uid: fields[15] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, FilmModel obj) {
     writer
-      ..writeByte(15)
+      ..writeByte(16)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
@@ -68,7 +69,9 @@ class FilmModelAdapter extends TypeAdapter<FilmModel> {
       ..writeByte(13)
       ..write(obj.url)
       ..writeByte(14)
-      ..write(obj.isFavorite);
+      ..write(obj.isFavorite)
+      ..writeByte(15)
+      ..write(obj.uid);
   }
 
   @override

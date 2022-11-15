@@ -18,5 +18,6 @@ extension FilmModelExtension on FilmModel {
       created: created,
       edited: edited,
       url: url,
-      isFavorite: isFavorite);
+      isFavorite: isFavorite,
+      uid: uid);
 }

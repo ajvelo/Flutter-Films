@@ -29,8 +29,7 @@ class HomePage extends ConsumerWidget {
                           : const Icon(Icons.favorite_border),
                       onPressed: () {
                         ref.read(filmsProvider.notifier).toggleFilmAsFavorite(
-                            episodeId: film.episodeId,
-                            params: FilmsParams(path: '/films'));
+                            uid: film.uid, params: FilmsParams(path: '/films'));
                       },
                     ),
                     subtitle: Text(film.releaseDate),

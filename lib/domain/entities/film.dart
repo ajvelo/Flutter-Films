@@ -16,7 +16,8 @@ class Film extends Equatable {
       required this.created,
       required this.edited,
       required this.url,
-      required this.isFavorite});
+      required this.isFavorite,
+      required this.uid});
 
   final String title;
   final int episodeId;
@@ -33,6 +34,7 @@ class Film extends Equatable {
   final DateTime edited;
   final String url;
   final bool isFavorite;
+  final String uid;
 
   @override
   List<Object?> get props => [
@@ -50,6 +52,7 @@ class Film extends Equatable {
         created,
         edited,
         url,
-        isFavorite
+        isFavorite,
+        uid
       ];
 }

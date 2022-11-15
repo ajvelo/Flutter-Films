@@ -21,8 +21,7 @@ class FilmsUsecase {
   }
 
   Future<Either<Failure, Film>> toggleFilmAsFavorite(
-      {required int episodeId, required FilmsParams params}) {
-    return repository.toggleFilmAsFavorite(
-        episodeId: episodeId, params: params);
+      {required String uid, required FilmsParams params}) {
+    return repository.toggleFilmAsFavorite(uid: uid, params: params);
   }
 }

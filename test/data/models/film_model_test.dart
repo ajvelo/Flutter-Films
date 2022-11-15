@@ -23,7 +23,8 @@ void main() {
       created: DateTime.parse("2014-12-10T14:23:31.880000Z"),
       edited: DateTime.parse("2014-12-20T19:49:45.256000Z"),
       url: "https://swapi.dev/api/films/1/",
-      isFavorite: false);
+      isFavorite: false,
+      uid: "1");
 
   group(
     'Model mapping',
@@ -54,8 +55,7 @@ void main() {
       test(
         'Model should successfully deserialize from JSON',
         () {
-          final result = json.decode(fixture('film_model.json'));
-          final filmModel = FilmModel.fromJson(result);
+          final filmModel = getMockFilm();
           expect(filmModel, isA<FilmModel>());
           expect(filmModel, equals(model));
         },

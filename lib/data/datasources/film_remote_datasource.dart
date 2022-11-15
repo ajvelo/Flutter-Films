@@ -10,7 +10,7 @@ abstract class FilmRemoteDataSource {
 
 class FilmsRemoteDataSourceImpl implements FilmRemoteDataSource {
   final Dio dio;
-  final baseUrl = 'https://swapi.dev/api';
+  final baseUrl = 'https://www.swapi.tech/api';
 
   FilmsRemoteDataSourceImpl({required this.dio});
 
@@ -20,11 +20,13 @@ class FilmsRemoteDataSourceImpl implements FilmRemoteDataSource {
       final response = await dio.get(baseUrl + params.path);
       switch (response.statusCode) {
         case 200:
-          final results = (response.data['results']);
-          final films = (results as List)
+          final result = (response.data['result']);
+          final films = (result as List)
               .map((filmModel) => FilmModel.fromJson(filmModel))
               .toList();
           return films;
+        case 400:
+          throw ServerException(message: 'Bad Request');
         default:
           throw ServerException(message: 'Error');
       }

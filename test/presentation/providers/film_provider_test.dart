@@ -19,7 +19,7 @@ void main() {
   late MockGetFilmsParams mockGetFilmsParams;
   late AutoDisposeStateNotifierProvider<FilmNotifier, GetFilmsState>
       filmProvider;
-  late int mockEpisodeId;
+  late String mockUid;
   late Film filmEntityAsFavorite;
 
   final container = ProviderContainer();
@@ -30,7 +30,7 @@ void main() {
     () {
       mockGetFilmsUsecase = MockGetFilmsUsecase();
       mockGetFilmsParams = MockGetFilmsParams();
-      mockEpisodeId = 1;
+      mockUid = "1";
       filmProvider =
           StateNotifierProvider.autoDispose<FilmNotifier, GetFilmsState>(
         (ref) {
@@ -39,6 +39,7 @@ void main() {
         },
       );
       filmEntityAsFavorite = Film(
+          uid: "1",
           title: 'title',
           episodeId: 1,
           openingCrawl: 'openingCrawl',
@@ -164,18 +165,19 @@ void main() {
       () async {
         // Arrange
         when(() => mockGetFilmsUsecase.toggleFilmAsFavorite(
-                params: mockGetFilmsParams, episodeId: mockEpisodeId))
+                params: mockGetFilmsParams, uid: mockUid))
             .thenAnswer((value) async => Right(filmEntitiy.first));
 
         // Act
-        container.read(filmProvider.notifier).toggleFilmAsFavorite(
-            params: mockGetFilmsParams, episodeId: mockEpisodeId);
+        container
+            .read(filmProvider.notifier)
+            .toggleFilmAsFavorite(params: mockGetFilmsParams, uid: mockUid);
         await untilCalled(() => mockGetFilmsUsecase.toggleFilmAsFavorite(
-            params: mockGetFilmsParams, episodeId: mockEpisodeId));
+            params: mockGetFilmsParams, uid: mockUid));
 
         // Assert
         verify(() => mockGetFilmsUsecase.toggleFilmAsFavorite(
-            params: mockGetFilmsParams, episodeId: mockEpisodeId));
+            params: mockGetFilmsParams, uid: mockUid));
         verifyNoMoreInteractions(mockGetFilmsUsecase);
       },
     );
@@ -200,7 +202,7 @@ void main() {
                 .isFavorite,
             false);
         when(() => mockGetFilmsUsecase.toggleFilmAsFavorite(
-                params: mockGetFilmsParams, episodeId: mockEpisodeId))
+                params: mockGetFilmsParams, uid: mockUid))
             .thenAnswer((value) async => Right(filmEntityAsFavorite));
         final correctOrderOfStates = [
           GetFilmsInitial(),
@@ -209,10 +211,11 @@ void main() {
         ];
 
         // Act
-        container.read(filmProvider.notifier).toggleFilmAsFavorite(
-            params: mockGetFilmsParams, episodeId: mockEpisodeId);
+        container
+            .read(filmProvider.notifier)
+            .toggleFilmAsFavorite(params: mockGetFilmsParams, uid: mockUid);
         await untilCalled(() => mockGetFilmsUsecase.toggleFilmAsFavorite(
-            params: mockGetFilmsParams, episodeId: mockEpisodeId));
+            params: mockGetFilmsParams, uid: mockUid));
 
         // Assert
         expect(orderOfStates, correctOrderOfStates);
@@ -224,7 +227,7 @@ void main() {
                 .isFavorite,
             true);
         verify(() => mockGetFilmsUsecase.toggleFilmAsFavorite(
-            params: mockGetFilmsParams, episodeId: mockEpisodeId));
+            params: mockGetFilmsParams, uid: mockUid));
         verifyNoMoreInteractions(mockGetFilmsUsecase);
       },
     );
@@ -249,7 +252,7 @@ void main() {
                 .isFavorite,
             false);
         when(() => mockGetFilmsUsecase.toggleFilmAsFavorite(
-                params: mockGetFilmsParams, episodeId: mockEpisodeId))
+                params: mockGetFilmsParams, uid: mockUid))
             .thenAnswer((value) async => Left(CacheFailure(message: 'error')));
         final correctOrderOfStates = [
           GetFilmsInitial(),
@@ -258,10 +261,11 @@ void main() {
         ];
 
         // Act
-        container.read(filmProvider.notifier).toggleFilmAsFavorite(
-            params: mockGetFilmsParams, episodeId: mockEpisodeId);
+        container
+            .read(filmProvider.notifier)
+            .toggleFilmAsFavorite(params: mockGetFilmsParams, uid: mockUid);
         await untilCalled(() => mockGetFilmsUsecase.toggleFilmAsFavorite(
-            params: mockGetFilmsParams, episodeId: mockEpisodeId));
+            params: mockGetFilmsParams, uid: mockUid));
 
         // Assert
         expect(orderOfStates, correctOrderOfStates);
@@ -273,7 +277,7 @@ void main() {
                 .isFavorite,
             false);
         verify(() => mockGetFilmsUsecase.toggleFilmAsFavorite(
-            params: mockGetFilmsParams, episodeId: mockEpisodeId));
+            params: mockGetFilmsParams, uid: mockUid));
         verifyNoMoreInteractions(mockGetFilmsUsecase);
       },
     );

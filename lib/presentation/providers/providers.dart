@@ -59,10 +59,10 @@ class FilmNotifier extends StateNotifier<GetFilmsState> {
   }
 
   void toggleFilmAsFavorite(
-      {required int episodeId, required FilmsParams params}) async {
+      {required String uid, required FilmsParams params}) async {
     state = GetFilmsLoading();
-    final results = await usecase.toggleFilmAsFavorite(
-        episodeId: episodeId, params: params);
+    final results =
+        await usecase.toggleFilmAsFavorite(uid: uid, params: params);
     results.fold((failure) {
       state = GetFilmsError(errorMessage: _getErrorMessage(failure));
     }, (film) {

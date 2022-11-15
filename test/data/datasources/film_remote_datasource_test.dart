@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_films/core/exception.dart';
 import 'package:flutter_films/data/datasources/film_remote_datasource.dart';
 import 'package:flutter_films/domain/usecases/films_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -25,7 +26,7 @@ void main() {
   void setUpMockDio(String fixtureName, int statusCode) {
     when(() => mockDio.get(any())).thenAnswer((invocation) async => Response(
         requestOptions: RequestOptions(path: "/films", method: "GET"),
-        statusCode: 200,
+        statusCode: statusCode,
         data: json.decode(fixture(fixtureName))));
   }
 
@@ -44,6 +45,19 @@ void main() {
               await filmsRemoteDataSourceImpl.getFilms(params: filmparams);
           // Assert
           expect(films.length, equals(6));
+        },
+      );
+      test(
+        'Should return an exception when a status code of 400 is recieved',
+        () async {
+          // Arrange
+          setUpMockDio('film_models.json', 400);
+          // Act
+          // Assert
+          expect(
+              () => filmsRemoteDataSourceImpl.getFilms(params: filmparams),
+              throwsA(predicate(
+                  (f) => f is ServerException && f.message == 'Bad Request')));
         },
       );
     },

@@ -8,7 +8,7 @@ abstract class FilmLocalDataSource {
   Future<List<FilmModel>> getFilms({required FilmsParams params});
   saveFilms({required List<FilmModel> filmModels, required FilmsParams params});
   Future<FilmModel> toggleFilmAsFavorite(
-      {required FilmsParams params, required int episodeId});
+      {required FilmsParams params, required String uid});
 }
 
 class FilmLocalDataSourceImpl implements FilmLocalDataSource {
@@ -33,9 +33,9 @@ class FilmLocalDataSourceImpl implements FilmLocalDataSource {
 
   @override
   toggleFilmAsFavorite(
-      {required int episodeId, required FilmsParams params}) async {
-    final film = await filmHiveHelper.toggleFilmAsFavorite(
-        episodeId: episodeId, params: params);
+      {required String uid, required FilmsParams params}) async {
+    final film =
+        await filmHiveHelper.toggleFilmAsFavorite(uid: uid, params: params);
     return film;
   }
 }

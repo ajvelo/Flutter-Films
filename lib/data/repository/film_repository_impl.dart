@@ -39,10 +39,10 @@ class FilmRepositoryImpl implements FilmRepository {
 
   @override
   Future<Either<Failure, Film>> toggleFilmAsFavorite(
-      {required int episodeId, required FilmsParams params}) async {
+      {required String uid, required FilmsParams params}) async {
     try {
-      final filmModel = await localDataSource.toggleFilmAsFavorite(
-          params: params, episodeId: episodeId);
+      final filmModel =
+          await localDataSource.toggleFilmAsFavorite(params: params, uid: uid);
       final film = filmModel.toFilm;
       return Right(film);
     } on CacheException catch (e) {

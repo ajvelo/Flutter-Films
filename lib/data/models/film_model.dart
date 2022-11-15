@@ -4,23 +4,23 @@ part 'film_model.g.dart';
 
 @HiveType(typeId: 0)
 class FilmModel extends Equatable {
-  FilmModel({
-    required this.title,
-    required this.episodeId,
-    required this.openingCrawl,
-    required this.director,
-    required this.producer,
-    required this.releaseDate,
-    required this.characters,
-    required this.planets,
-    required this.starships,
-    required this.vehicles,
-    required this.species,
-    required this.created,
-    required this.edited,
-    required this.url,
-    required this.isFavorite,
-  });
+  FilmModel(
+      {required this.title,
+      required this.episodeId,
+      required this.openingCrawl,
+      required this.director,
+      required this.producer,
+      required this.releaseDate,
+      required this.characters,
+      required this.planets,
+      required this.starships,
+      required this.vehicles,
+      required this.species,
+      required this.created,
+      required this.edited,
+      required this.url,
+      required this.isFavorite,
+      required this.uid});
 
   @HiveField(0)
   final String title;
@@ -52,31 +52,36 @@ class FilmModel extends Equatable {
   final String url;
   @HiveField(14)
   bool isFavorite;
+  @HiveField(15)
+  String uid;
 
   factory FilmModel.fromJson(Map<String, dynamic> json) => FilmModel(
       isFavorite: false,
-      title: json['title'],
-      episodeId: json['episode_id'],
-      openingCrawl: json['opening_crawl'],
-      director: json['director'],
-      producer: json['producer'],
-      releaseDate: DateTime.parse(json['release_date']),
-      characters: List<String>.from(json['characters'])
+      title: json['properties']['title'],
+      episodeId: json['properties']['episode_id'],
+      openingCrawl: json['properties']['opening_crawl'],
+      director: json['properties']['director'],
+      producer: json['properties']['producer'],
+      releaseDate: DateTime.parse(json['properties']['release_date']),
+      characters: List<String>.from(json['properties']['characters'])
           .map((character) => character)
           .toList(),
-      planets:
-          List<String>.from(json['planets']).map((planet) => planet).toList(),
-      starships: List<String>.from(json['starships'])
+      planets: List<String>.from(json['properties']['planets'])
+          .map((planet) => planet)
+          .toList(),
+      starships: List<String>.from(json['properties']['starships'])
           .map((starship) => starship)
           .toList(),
-      vehicles: List<String>.from(json['vehicles'])
+      vehicles: List<String>.from(json['properties']['vehicles'])
           .map((vehicle) => vehicle)
           .toList(),
-      species:
-          List<String>.from(json['species']).map((species) => species).toList(),
-      created: DateTime.parse(json['created']),
-      edited: DateTime.parse(json['edited']),
-      url: json['url']);
+      species: List<String>.from(json['properties']['species'])
+          .map((species) => species)
+          .toList(),
+      created: DateTime.parse(json['properties']['created']),
+      edited: DateTime.parse(json['properties']['edited']),
+      url: json['properties']['url'],
+      uid: json['uid']);
 
   @override
   List<Object?> get props => [
@@ -94,6 +99,7 @@ class FilmModel extends Equatable {
         created,
         edited,
         url,
-        isFavorite
+        isFavorite,
+        uid
       ];
 }

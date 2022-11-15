@@ -30,20 +30,20 @@ class FilmHiveHelper implements FilmLocalDataSource {
     final box = await _getBox(params: params);
     await box.clear();
     filmModels.forEach((filmModel) async {
-      box.put(filmModel.episodeId, filmModel);
+      box.put(filmModel.uid, filmModel);
     });
   }
 
   @override
   Future<FilmModel> toggleFilmAsFavorite(
-      {required int episodeId, required FilmsParams params}) async {
+      {required String uid, required FilmsParams params}) async {
     final box = await _getBox(params: params);
-    final filmModel = box.get(episodeId);
+    final filmModel = box.get(uid);
     if (filmModel == null) {
       throw CacheException(message: 'No films found');
     } else {
       filmModel.isFavorite = !filmModel.isFavorite;
-      box.put(filmModel.episodeId, filmModel);
+      box.put(filmModel.uid, filmModel);
       return filmModel;
     }
   }
