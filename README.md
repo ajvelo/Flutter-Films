@@ -94,7 +94,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Installation
 
-1. Access the API at [Star Wars API](https://swapi.dev/).
+1. Access the API at [Star Wars API](https://www.swapi.tech/).
 2. Clone the repo
    ```sh
    git clone https://github.com/ajvelo/Flutter-Films.git

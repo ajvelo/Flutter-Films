@@ -1,9 +1,8 @@
+import '../../../../core/exception.dart';
+import '../../domain/usecases/films_usecase.dart';
 import 'film_local_datasource.dart';
 import '../models/film_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
-import '../../core/exception.dart';
-import '../../domain/usecases/films_usecase.dart';
 
 class FilmHiveHelper implements FilmLocalDataSource {
   Future<Box<FilmModel>> _getBox({required FilmsParams params}) async {

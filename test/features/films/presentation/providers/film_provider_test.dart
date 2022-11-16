@@ -1,9 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_films/core/extensions/film_model_ext.dart';
+
 import 'package:flutter_films/core/failure.dart';
-import 'package:flutter_films/domain/entities/film.dart';
-import 'package:flutter_films/domain/usecases/films_usecase.dart';
-import 'package:flutter_films/presentation/providers/providers.dart';
+import 'package:flutter_films/features/films/domain/entities/film.dart';
+import 'package:flutter_films/features/films/domain/usecases/films_usecase.dart';
+import 'package:flutter_films/features/films/presentation/providers/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

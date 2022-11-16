@@ -1,5 +1,5 @@
-import '../../data/models/film_model.dart';
-import '../../domain/entities/film.dart';
+import '../../features/films/data/models/film_model.dart';
+import '../../features/films/domain/entities/film.dart';
 
 extension FilmModelExtension on FilmModel {
   Film get toFilm => Film(

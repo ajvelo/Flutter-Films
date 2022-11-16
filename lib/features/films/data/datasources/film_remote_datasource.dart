@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../../core/exception.dart';
+import '../../../../core/exception.dart';
 import '../../domain/usecases/films_usecase.dart';
 import '../models/film_model.dart';
 

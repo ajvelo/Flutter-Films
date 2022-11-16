@@ -2,8 +2,9 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_films/core/exception.dart';
-import 'package:flutter_films/data/datasources/film_remote_datasource.dart';
-import 'package:flutter_films/domain/usecases/films_usecase.dart';
+
+import 'package:flutter_films/features/films/data/datasources/film_remote_datasource.dart';
+import 'package:flutter_films/features/films/domain/usecases/films_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

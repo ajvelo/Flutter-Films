@@ -1,6 +1,7 @@
 import 'package:flutter_films/core/extensions/film_model_ext.dart';
-import 'package:flutter_films/data/models/film_model.dart';
-import 'package:flutter_films/domain/entities/film.dart';
+
+import 'package:flutter_films/features/films/data/models/film_model.dart';
+import 'package:flutter_films/features/films/domain/entities/film.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../fixtures/fixture_reader.dart';

@@ -2,12 +2,12 @@ import 'package:flutter_films/core/exception.dart';
 import 'package:flutter_films/core/extensions/film_model_ext.dart';
 import 'package:flutter_films/core/failure.dart';
 
-import 'package:flutter_films/data/datasources/film_local_datasource.dart';
-import 'package:flutter_films/data/datasources/film_remote_datasource.dart';
-import 'package:flutter_films/data/models/film_model.dart';
-import 'package:flutter_films/data/repository/film_repository_impl.dart';
-import 'package:flutter_films/domain/entities/film.dart';
-import 'package:flutter_films/domain/usecases/films_usecase.dart';
+import 'package:flutter_films/features/films/data/datasources/film_local_datasource.dart';
+import 'package:flutter_films/features/films/data/datasources/film_remote_datasource.dart';
+import 'package:flutter_films/features/films/data/models/film_model.dart';
+import 'package:flutter_films/features/films/data/repository/film_repository_impl.dart';
+import 'package:flutter_films/features/films/domain/entities/film.dart';
+import 'package:flutter_films/features/films/domain/usecases/films_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_films/core/extensions/film_model_ext.dart';
+import '../../../../core/extensions/film_model_ext.dart';
 
-import '../../core/exception.dart';
-import '../../core/failure.dart';
+import '../../../../core/exception.dart';
+import '../../../../core/failure.dart';
 import '../../domain/entities/film.dart';
 import '../../domain/repository/film_repository.dart';
 import '../../domain/usecases/films_usecase.dart';

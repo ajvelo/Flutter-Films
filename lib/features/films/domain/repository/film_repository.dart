@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 
-import '../../core/failure.dart';
+import '../../../../core/failure.dart';
 import '../entities/film.dart';
 import '../usecases/films_usecase.dart';
 

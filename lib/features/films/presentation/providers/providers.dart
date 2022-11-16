@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/failure.dart';
+import '../../../../core/failure.dart';
 import '../../data/datasources/film_hive_helper.dart';
 import '../../data/datasources/film_local_datasource.dart';
 import '../../data/datasources/film_remote_datasource.dart';

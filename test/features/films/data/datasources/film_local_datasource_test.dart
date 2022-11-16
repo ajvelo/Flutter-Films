@@ -1,8 +1,8 @@
 import 'package:flutter_films/core/exception.dart';
-import 'package:flutter_films/data/datasources/film_hive_helper.dart';
-import 'package:flutter_films/data/datasources/film_local_datasource.dart';
-import 'package:flutter_films/data/models/film_model.dart';
-import 'package:flutter_films/domain/usecases/films_usecase.dart';
+import 'package:flutter_films/features/films/data/datasources/film_hive_helper.dart';
+import 'package:flutter_films/features/films/data/datasources/film_local_datasource.dart';
+import 'package:flutter_films/features/films/data/models/film_model.dart';
+import 'package:flutter_films/features/films/domain/usecases/films_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
