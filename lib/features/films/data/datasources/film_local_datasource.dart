@@ -4,8 +4,10 @@ import '../models/film_model.dart';
 import 'film_hive_helper.dart';
 
 abstract class FilmLocalDataSource {
-  Future<List<FilmModel>> getFilms({required FilmsParams params});
-  saveFilms({required List<FilmModel> filmModels, required FilmsParams params});
+  Future<List<FilmModel>> getFilms();
+  saveFilms({
+    required List<FilmModel> filmModels,
+  });
   Future<FilmModel> toggleFilmAsFavorite(
       {required FilmsParams params, required String uid});
 }
@@ -15,8 +17,8 @@ class FilmLocalDataSourceImpl implements FilmLocalDataSource {
 
   FilmLocalDataSourceImpl({required this.filmHiveHelper});
   @override
-  Future<List<FilmModel>> getFilms({required FilmsParams params}) async {
-    final films = await filmHiveHelper.getFilms(params: params);
+  Future<List<FilmModel>> getFilms() async {
+    final films = await filmHiveHelper.getFilms();
     if (films.isNotEmpty) {
       return films;
     } else {
@@ -25,9 +27,8 @@ class FilmLocalDataSourceImpl implements FilmLocalDataSource {
   }
 
   @override
-  saveFilms(
-      {required List<FilmModel> filmModels, required FilmsParams params}) {
-    return filmHiveHelper.saveFilms(filmModels: filmModels, params: params);
+  saveFilms({required List<FilmModel> filmModels}) {
+    filmHiveHelper.saveFilms(filmModels: filmModels);
   }
 
   @override

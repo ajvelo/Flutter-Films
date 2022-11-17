@@ -47,7 +47,7 @@ void main() {
           // Arrange
           when((() => mockRemoteDataSource.getFilms(params: filmsParams)))
               .thenAnswer((invocation) async => filmModels);
-          when(() => mockLocalDataSource.getFilms(params: filmsParams))
+          when(() => mockLocalDataSource.getFilms())
               .thenThrow(CacheException(message: 'No films found'));
           // Act
           final result = await filmRepositoryImpl.getFilms(params: filmsParams);
@@ -55,10 +55,10 @@ void main() {
           // Assert
           verify(() => mockRemoteDataSource.getFilms(params: filmsParams))
               .called(1);
-          verify(() => mockLocalDataSource.getFilms(params: filmsParams))
-              .called(1);
+          verify(() => mockLocalDataSource.getFilms()).called(1);
           verify(() => mockLocalDataSource.saveFilms(
-              filmModels: filmModels, params: filmsParams)).called(1);
+                filmModels: filmModels,
+              )).called(1);
           expect(result.isRight(), true);
           expect(resultFolded, films);
           expect(resultFolded, equals(films));
@@ -71,7 +71,7 @@ void main() {
           // Arrange
           when((() => mockRemoteDataSource.getFilms(params: filmsParams)))
               .thenThrow(ServerException(message: "Error"));
-          when(() => mockLocalDataSource.getFilms(params: filmsParams))
+          when(() => mockLocalDataSource.getFilms())
               .thenThrow(CacheException(message: 'No films found'));
           // Act
           final result = await filmRepositoryImpl.getFilms(params: filmsParams);
@@ -79,8 +79,7 @@ void main() {
           // Assert
           verify(() => mockRemoteDataSource.getFilms(params: filmsParams))
               .called(1);
-          verify(() => mockLocalDataSource.getFilms(params: filmsParams))
-              .called(1);
+          verify(() => mockLocalDataSource.getFilms()).called(1);
           expect(result.isLeft(), true);
           expect(resultFolded, ServerFailure(message: "Error"));
         },

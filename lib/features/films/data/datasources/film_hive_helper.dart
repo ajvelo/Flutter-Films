@@ -5,28 +5,24 @@ import '../models/film_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class FilmHiveHelper implements FilmLocalDataSource {
-  Future<Box<FilmModel>> _getBox({required FilmsParams params}) async {
+  Future<Box<FilmModel>> _getBox() async {
     Box<FilmModel> box;
-    if (params.path == '/films') {
-      box = await Hive.openBox<FilmModel>('films');
-    } else {
-      box = await Hive.openBox<FilmModel>('other-films');
-    }
+    box = await Hive.openBox<FilmModel>('films');
     return box;
   }
 
   @override
-  Future<List<FilmModel>> getFilms({required FilmsParams params}) async {
-    final box = await _getBox(params: params);
+  Future<List<FilmModel>> getFilms() async {
+    final box = await _getBox();
     final films = box.values.toList();
     return films;
   }
 
   @override
-  saveFilms(
-      {required List<FilmModel> filmModels,
-      required FilmsParams params}) async {
-    final box = await _getBox(params: params);
+  saveFilms({
+    required List<FilmModel> filmModels,
+  }) async {
+    final box = await _getBox();
     await box.clear();
     filmModels.forEach((filmModel) async {
       box.put(filmModel.uid, filmModel);
@@ -36,7 +32,7 @@ class FilmHiveHelper implements FilmLocalDataSource {
   @override
   Future<FilmModel> toggleFilmAsFavorite(
       {required String uid, required FilmsParams params}) async {
-    final box = await _getBox(params: params);
+    final box = await _getBox();
     final filmModel = box.get(uid);
     if (filmModel == null) {
       throw CacheException(message: 'No films found');

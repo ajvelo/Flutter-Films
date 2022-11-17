@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_films/features/characters/domain/repository/character_repository.dart';
 
 class CharacterParams {
-  final String path;
+  final List<String> path;
   CharacterParams({
     required this.path,
   });
@@ -16,8 +16,8 @@ class CharacterUsecase implements CharacterRepository {
   CharacterUsecase({required this.repository});
 
   @override
-  Either<Failure, List<Character>> getCharacters(
-      {required CharacterParams params}) {
-    return repository.getCharacters(params: params);
+  Future<Either<Failure, List<Character>>> getCharacters(
+      {required CharacterParams params}) async {
+    return await repository.getCharacters(params: params);
   }
 }

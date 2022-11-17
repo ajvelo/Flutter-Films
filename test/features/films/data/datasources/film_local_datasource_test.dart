@@ -35,15 +35,13 @@ void main() {
         'Should return a list of films from cache when there is data in cache',
         () async {
           // Arrange
-          when((() => mockFilmHiveHelper.getFilms(params: filmsParams)))
+          when((() => mockFilmHiveHelper.getFilms()))
               .thenAnswer((invocation) => Future.value(filmModels));
           // Act
-          final result =
-              await filmLocalDataSourceImpl.getFilms(params: filmsParams);
+          final result = await filmLocalDataSourceImpl.getFilms();
           // Assert
           expect(result, filmModels);
-          verify((() => mockFilmHiveHelper.getFilms(params: filmsParams)))
-              .called(1);
+          verify((() => mockFilmHiveHelper.getFilms())).called(1);
           verifyNoMoreInteractions(mockFilmHiveHelper);
         },
       );
@@ -51,16 +49,15 @@ void main() {
         'Should throw a CacheException when there is no data in cache',
         () async {
           // Arrange
-          when((() => mockFilmHiveHelper.getFilms(params: filmsParams)))
+          when((() => mockFilmHiveHelper.getFilms()))
               .thenAnswer((invocation) => Future.value(List.empty()));
           // Act
           // Assert
           expect(
-              () async => filmLocalDataSourceImpl.getFilms(params: filmsParams),
+              () async => filmLocalDataSourceImpl.getFilms(),
               throwsA(predicate((f) =>
                   f is CacheException && f.message == "No films found")));
-          verify((() => mockFilmHiveHelper.getFilms(params: filmsParams)))
-              .called(1);
+          verify((() => mockFilmHiveHelper.getFilms())).called(1);
           verifyNoMoreInteractions(mockFilmHiveHelper);
         },
       );
@@ -69,15 +66,16 @@ void main() {
         'Should call HiveHelper to save films',
         () async {
           // Arrange
-          when((() => mockFilmHiveHelper.saveFilms(
-                  params: filmsParams, filmModels: filmModels)))
+          when((() => mockFilmHiveHelper.saveFilms(filmModels: filmModels)))
               .thenAnswer((invocation) => Future.value());
           // Act
           await filmLocalDataSourceImpl.saveFilms(
-              filmModels: filmModels, params: filmsParams);
+            filmModels: filmModels,
+          );
           // Assert
           verify((() => mockFilmHiveHelper.saveFilms(
-              filmModels: filmModels, params: filmsParams))).called(1);
+                filmModels: filmModels,
+              ))).called(1);
           verifyNoMoreInteractions(mockFilmHiveHelper);
         },
       );

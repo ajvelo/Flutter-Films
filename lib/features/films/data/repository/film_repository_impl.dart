@@ -20,13 +20,13 @@ class FilmRepositoryImpl implements FilmRepository {
   Future<Either<Failure, List<Film>>> getFilms(
       {required FilmsParams params}) async {
     try {
-      final filmModels = await localDataSource.getFilms(params: params);
+      final filmModels = await localDataSource.getFilms();
       final films = filmModels.map((film) => film.toFilm).toList();
       return Right(films);
     } on CacheException catch (_) {
       try {
         final filmModels = await remoteDateSource.getFilms(params: params);
-        localDataSource.saveFilms(filmModels: filmModels, params: params);
+        localDataSource.saveFilms(filmModels: filmModels);
         final films = filmModels.map((film) => film.toFilm).toList();
         return Right(films);
       } on ServerException catch (e) {

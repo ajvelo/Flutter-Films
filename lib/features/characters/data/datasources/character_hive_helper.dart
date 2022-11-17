@@ -5,20 +5,15 @@ import 'package:flutter_films/features/characters/domain/usecases/character_usec
 import 'package:hive_flutter/hive_flutter.dart';
 
 class CharacterHiveHelper implements CharacterLocalDataSource {
-  Future<Box<CharacterModel>> _getBox({required CharacterParams params}) async {
+  Future<Box<CharacterModel>> _getBox() async {
     Box<CharacterModel> box;
-    if (params.path == '/people') {
-      box = await Hive.openBox<CharacterModel>('people');
-    } else {
-      box = await Hive.openBox<CharacterModel>('other-people');
-    }
+    box = await Hive.openBox<CharacterModel>('people');
     return box;
   }
 
   @override
-  Future<List<CharacterModel>> getCharacters(
-      {required CharacterParams params}) async {
-    final box = await _getBox(params: params);
+  Future<List<CharacterModel>> getCharacters() async {
+    final box = await _getBox();
     final characters = box.values.toList();
     return characters;
   }
@@ -27,7 +22,7 @@ class CharacterHiveHelper implements CharacterLocalDataSource {
   saveCharacters(
       {required List<CharacterModel> characterModels,
       required CharacterParams params}) async {
-    final box = await _getBox(params: params);
+    final box = await _getBox();
     await box.clear();
     characterModels.forEach((characterModel) async {
       box.put(characterModel.uid, characterModel);
