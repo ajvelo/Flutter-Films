@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_films/core/routes/app_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/usecases/films_usecase.dart';
@@ -22,6 +24,10 @@ class HomePage extends ConsumerWidget {
                 itemBuilder: (context, index) {
                   final film = state.films[index];
                   return ListTile(
+                    onTap: () {
+                      AutoRouter.of(context).push(
+                          CharacterHomeRoute(characters: film.characters));
+                    },
                     title: Text(film.title),
                     leading: IconButton(
                       icon: film.isFavorite

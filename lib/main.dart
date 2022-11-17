@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_films/core/routes/app_router.dart';
 import 'features/films/presentation/pages/home_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -9,15 +10,18 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(FilmModelAdapter());
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final _appRouter = AppRouter();
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerDelegate: _appRouter.delegate(),
+      routeInformationParser: _appRouter.defaultRouteParser(),
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -26,7 +30,6 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.dark,
       darkTheme: ThemeData.dark(useMaterial3: true),
-      home: const HomePage(),
     );
   }
 }
