@@ -24,9 +24,9 @@ class FilmHiveHelper implements FilmLocalDataSource {
   }) async {
     final box = await _getBox();
     await box.clear();
-    filmModels.forEach((filmModel) async {
+    for (var filmModel in filmModels) {
       box.put(filmModel.uid, filmModel);
-    });
+    }
   }
 
   @override

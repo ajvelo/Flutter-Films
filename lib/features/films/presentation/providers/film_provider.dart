@@ -10,9 +10,8 @@ import '../../data/repository/film_repository_impl.dart';
 import '../../domain/entities/film.dart';
 import '../../domain/usecases/films_usecase.dart';
 
-final filmsProvider =
-    StateNotifierProvider.autoDispose<FilmNotifier, GetFilmsState>(
-  (ref) {
+final filmsProvider = NotifierProvider<FilmNotifier, GetFilmsState>(
+  () {
     return FilmNotifier(
         usecase: FilmsUsecase(
             repository: FilmRepositoryImpl(
@@ -23,12 +22,10 @@ final filmsProvider =
   },
 );
 
-// TODO: Change to NotifierProvider
-class FilmNotifier extends StateNotifier<GetFilmsState> {
+class FilmNotifier extends Notifier<GetFilmsState> {
   final FilmsUsecase usecase;
   List<Film> storedFilms;
-  FilmNotifier({required this.usecase, required this.storedFilms})
-      : super(GetFilmsInitial());
+  FilmNotifier({required this.usecase, required this.storedFilms}) : super();
 
   String _getErrorMessage(Failure failure) {
     switch (failure.runtimeType) {
@@ -72,6 +69,11 @@ class FilmNotifier extends StateNotifier<GetFilmsState> {
       storedFilms[index] = film;
       state = GetFilmsSuccess(films: storedFilms);
     });
+  }
+
+  @override
+  GetFilmsState build() {
+    return GetFilmsInitial();
   }
 }
 

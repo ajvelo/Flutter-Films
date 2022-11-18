@@ -18,8 +18,7 @@ class MockGetFilmsParams extends Mock implements FilmsParams {}
 void main() {
   late MockGetFilmsUsecase mockGetFilmsUsecase;
   late MockGetFilmsParams mockGetFilmsParams;
-  late AutoDisposeStateNotifierProvider<FilmNotifier, GetFilmsState>
-      filmProvider;
+  late NotifierProvider<FilmNotifier, GetFilmsState> filmProvider;
   late String mockUid;
   late Film filmEntityAsFavorite;
 
@@ -32,9 +31,8 @@ void main() {
       mockGetFilmsUsecase = MockGetFilmsUsecase();
       mockGetFilmsParams = MockGetFilmsParams();
       mockUid = "1";
-      filmProvider =
-          StateNotifierProvider.autoDispose<FilmNotifier, GetFilmsState>(
-        (ref) {
+      filmProvider = NotifierProvider<FilmNotifier, GetFilmsState>(
+        () {
           return FilmNotifier(
               usecase: mockGetFilmsUsecase, storedFilms: filmEntitiy);
         },

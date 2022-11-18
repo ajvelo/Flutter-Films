@@ -24,8 +24,8 @@ class CharacterHiveHelper implements CharacterLocalDataSource {
       required CharacterParams params}) async {
     final box = await _getBox();
     await box.clear();
-    characterModels.forEach((characterModel) async {
+    for (var characterModel in characterModels) {
       box.put(characterModel.uid, characterModel);
-    });
+    }
   }
 }
