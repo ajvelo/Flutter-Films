@@ -5,7 +5,7 @@ import 'package:flutter_films/features/characters/domain/usecases/character_usec
 import 'character_hive_helper.dart';
 
 abstract class CharacterLocalDataSource {
-  Future<List<CharacterModel>> getCharacters();
+  Future<List<CharacterModel>> getCharacters({required CharacterParams params});
   saveCharacters(
       {required List<CharacterModel> characterModels,
       required CharacterParams params});
@@ -16,8 +16,10 @@ class CharacterLocalDataSourceImpl implements CharacterLocalDataSource {
 
   CharacterLocalDataSourceImpl({required this.characterHiveHelper});
   @override
-  Future<List<CharacterModel>> getCharacters() async {
-    final characterModels = await characterHiveHelper.getCharacters();
+  Future<List<CharacterModel>> getCharacters(
+      {required CharacterParams params}) async {
+    final characterModels =
+        await characterHiveHelper.getCharacters(params: params);
     if (characterModels.isEmpty) {
       throw CacheException(message: 'No characters found');
     } else {

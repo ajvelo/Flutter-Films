@@ -1,6 +1,8 @@
 import 'package:flutter_films/features/characters/data/models/character_model.dart';
 import 'package:flutter_films/features/characters/domain/entities/character.dart';
 
+import '../../features/characters/data/models/properties_model.dart';
+
 extension PropertyModelExtension on PropertiesModel {
   Properties get toProperties => Properties(
       height: height,

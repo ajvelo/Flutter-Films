@@ -25,8 +25,8 @@ class HomePage extends ConsumerWidget {
                   final film = state.films[index];
                   return ListTile(
                     onTap: () {
-                      AutoRouter.of(context).push(
-                          CharacterHomeRoute(characterUrls: film.characters));
+                      AutoRouter.of(context).push(CharacterHomeRoute(
+                          characterUrls: film.characters, uid: film.uid));
                     },
                     title: Text(film.title),
                     leading: IconButton(

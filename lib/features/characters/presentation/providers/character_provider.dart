@@ -51,7 +51,12 @@ class CharacterNotifier extends Notifier<GetCharactersState> {
     results.fold((failure) {
       state = GetCharactersError(errorMessage: _getErrorMessage(failure));
     }, (characters) {
-      storedCharacters = characters;
+      storedCharacters = characters
+        ..sort(
+          (a, b) {
+            return a.properties.name.compareTo(b.properties.name);
+          },
+        );
       state = GetCharactersSuccess(characters: characters);
     });
   }

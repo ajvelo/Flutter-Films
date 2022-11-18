@@ -5,9 +5,8 @@ import 'package:flutter_films/features/characters/domain/repository/character_re
 
 class CharacterParams {
   final List<String> path;
-  CharacterParams({
-    required this.path,
-  });
+  final String uid;
+  CharacterParams({required this.path, required this.uid});
 }
 
 class CharacterUsecase implements CharacterRepository {

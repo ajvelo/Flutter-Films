@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:flutter_films/core/exception.dart';
 import 'package:flutter_films/core/extensions/character_model_ext.dart';
 import 'package:flutter_films/features/characters/data/datasources/character_local_datasource.dart';
 import 'package:flutter_films/features/characters/data/datasources/character_remote_datasource.dart';
@@ -18,12 +21,24 @@ class CharacterRepositoryImpl implements CharacterRepository {
       {required CharacterParams params}) async {
     try {
       final characterModels =
-          await remoteDataSource.getCharacters(params: params);
+          await localDataSource.getCharacters(params: params);
       final characters = characterModels
           .map((characterModel) => characterModel.toCharacter)
           .toList();
       return Right(characters);
-    } catch (e) {}
-    return Left(ServerFailure(message: 'To be implemented'));
+    } on CacheException catch (e) {
+      final characterModels =
+          await remoteDataSource.getCharacters(params: params);
+      localDataSource.saveCharacters(
+          characterModels: characterModels, params: params);
+      final characters = characterModels
+          .map((characterModel) => characterModel.toCharacter)
+          .toList();
+      return Right(characters);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message));
+    } catch (e) {
+      return Left(ServerFailure(message: e.toString()));
+    }
   }
 }

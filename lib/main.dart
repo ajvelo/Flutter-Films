@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_films/core/routes/app_router.dart';
 import 'package:flutter_films/features/characters/data/models/character_model.dart';
+import 'package:flutter_films/features/characters/data/models/properties_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -10,6 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(FilmModelAdapter());
+  Hive.registerAdapter(PropertiesModelAdapter());
   Hive.registerAdapter(CharacterModelAdapter());
   runApp(ProviderScope(child: MyApp()));
 }

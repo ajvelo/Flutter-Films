@@ -5,7 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CharacterHomePage extends ConsumerStatefulWidget {
   final List<String> characterUrls;
-  const CharacterHomePage({super.key, required this.characterUrls});
+  final String uid;
+  const CharacterHomePage(
+      {super.key, required this.characterUrls, required this.uid});
 
   @override
   createState() => _CharacterHomePageState();
@@ -16,9 +18,8 @@ class _CharacterHomePageState extends ConsumerState<CharacterHomePage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ref
-          .read(characterProvider.notifier)
-          .getCharacters(params: CharacterParams(path: widget.characterUrls));
+      ref.read(characterProvider.notifier).getCharacters(
+          params: CharacterParams(path: widget.characterUrls, uid: widget.uid));
     });
   }
 
@@ -40,7 +41,8 @@ class _CharacterHomePageState extends ConsumerState<CharacterHomePage> {
                     // Go to character
                   },
                   title: Text(character.properties.name),
-                  subtitle: Text(character.properties.birthYear),
+                  subtitle:
+                      Text("Birthyear: ${character.properties.birthYear}"),
                 );
               },
             );
