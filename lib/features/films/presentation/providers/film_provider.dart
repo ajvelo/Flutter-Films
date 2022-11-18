@@ -18,11 +18,12 @@ final filmsProvider =
             repository: FilmRepositoryImpl(
                 localDataSource:
                     FilmLocalDataSourceImpl(filmHiveHelper: FilmHiveHelper()),
-                remoteDateSource: FilmsRemoteDataSourceImpl(dio: Dio()))),
+                remoteDataSource: FilmsRemoteDataSourceImpl(dio: Dio()))),
         storedFilms: []);
   },
 );
 
+// TODO: Change to NotifierProvider
 class FilmNotifier extends StateNotifier<GetFilmsState> {
   final FilmsUsecase usecase;
   List<Film> storedFilms;

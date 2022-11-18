@@ -31,7 +31,7 @@ void main() {
       mockRemoteDataSource = MockRemoteDataSource();
       filmRepositoryImpl = FilmRepositoryImpl(
           localDataSource: mockLocalDataSource,
-          remoteDateSource: mockRemoteDataSource);
+          remoteDataSource: mockRemoteDataSource);
       filmsParams = FilmsParams(path: '/films');
       filmModels = getMockFilms();
       films = filmModels.map((e) => e.toFilm).toList();

@@ -4,7 +4,7 @@ import 'package:flutter_films/core/routes/app_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/usecases/films_usecase.dart';
-import '../providers/providers.dart';
+import '../providers/film_provider.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -26,7 +26,7 @@ class HomePage extends ConsumerWidget {
                   return ListTile(
                     onTap: () {
                       AutoRouter.of(context).push(
-                          CharacterHomeRoute(characters: film.characters));
+                          CharacterHomeRoute(characterUrls: film.characters));
                     },
                     title: Text(film.title),
                     leading: IconButton(

@@ -1,3 +1,4 @@
+import 'package:flutter_films/core/extensions/character_model_ext.dart';
 import 'package:flutter_films/features/characters/data/datasources/character_local_datasource.dart';
 import 'package:flutter_films/features/characters/data/datasources/character_remote_datasource.dart';
 import 'package:flutter_films/features/characters/domain/entities/character.dart';
@@ -7,17 +8,21 @@ import 'package:flutter_films/features/characters/domain/repository/character_re
 import 'package:flutter_films/features/characters/domain/usecases/character_usecase.dart';
 
 class CharacterRepositoryImpl implements CharacterRepository {
-  final CharacterRemoteDatasource remoteDatasource;
+  final CharacterRemoteDatasource remoteDataSource;
   final CharacterLocalDataSource localDataSource;
 
   CharacterRepositoryImpl(
-      {required this.remoteDatasource, required this.localDataSource});
+      {required this.remoteDataSource, required this.localDataSource});
   @override
   Future<Either<Failure, List<Character>>> getCharacters(
       {required CharacterParams params}) async {
     try {
-      // final characterModels = await localDataSource.getCharacters(params: params)
-
+      final characterModels =
+          await remoteDataSource.getCharacters(params: params);
+      final characters = characterModels
+          .map((characterModel) => characterModel.toCharacter)
+          .toList();
+      return Right(characters);
     } catch (e) {}
     return Left(ServerFailure(message: 'To be implemented'));
   }

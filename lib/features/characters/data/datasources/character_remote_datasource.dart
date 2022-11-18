@@ -17,8 +17,7 @@ class CharacterRemoteDatasourceImpl implements CharacterRemoteDatasource {
   Future<List<CharacterModel>> getCharacters(
       {required CharacterParams params}) async {
     List<CharacterModel> characterList = [];
-
-    params.path.forEach((url) async {
+    for (var url in params.path) {
       try {
         final response = await dio.get(url);
         switch (response.statusCode) {
@@ -26,12 +25,12 @@ class CharacterRemoteDatasourceImpl implements CharacterRemoteDatasource {
             final result = (response.data["result"]);
             final CharacterModel character = CharacterModel.fromJson(result);
             characterList.add(character);
+            print(characterList.length);
         }
       } catch (e) {
         log(e.toString());
       }
-    });
-
+    }
     if (characterList.isEmpty) {
       throw ServerException(message: 'Server Error');
     } else {

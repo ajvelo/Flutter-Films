@@ -10,11 +10,11 @@ import '../datasources/film_local_datasource.dart';
 import '../datasources/film_remote_datasource.dart';
 
 class FilmRepositoryImpl implements FilmRepository {
-  final FilmRemoteDataSource remoteDateSource;
+  final FilmRemoteDataSource remoteDataSource;
   final FilmLocalDataSource localDataSource;
 
   FilmRepositoryImpl(
-      {required this.localDataSource, required this.remoteDateSource});
+      {required this.localDataSource, required this.remoteDataSource});
 
   @override
   Future<Either<Failure, List<Film>>> getFilms(
@@ -25,7 +25,7 @@ class FilmRepositoryImpl implements FilmRepository {
       return Right(films);
     } on CacheException catch (_) {
       try {
-        final filmModels = await remoteDateSource.getFilms(params: params);
+        final filmModels = await remoteDataSource.getFilms(params: params);
         localDataSource.saveFilms(filmModels: filmModels);
         final films = filmModels.map((film) => film.toFilm).toList();
         return Right(films);
