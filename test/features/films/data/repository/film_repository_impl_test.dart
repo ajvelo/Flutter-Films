@@ -24,6 +24,7 @@ void main() {
   late FilmsParams filmsParams;
   late List<FilmModel> filmModels;
   late List<Film> films;
+  late FilmModel filmModel;
 
   setUp(
     () {
@@ -35,6 +36,7 @@ void main() {
       filmsParams = FilmsParams(path: '/films');
       filmModels = getMockFilms();
       films = filmModels.map((e) => e.toFilm).toList();
+      filmModel = filmModels.first;
     },
   );
 
@@ -86,4 +88,46 @@ void main() {
       );
     },
   );
+
+  group('Toggle film as favorite', (() {
+    test(
+      'Should return a film when successfully toggled as favorite',
+      () async {
+        // Arrange
+        when((() => mockLocalDataSource.toggleFilmAsFavorite(
+            params: filmsParams,
+            uid: "1"))).thenAnswer((invocation) async => filmModel);
+        // Act
+        final result = await filmRepositoryImpl.toggleFilmAsFavorite(
+            uid: "1", params: filmsParams);
+        final resultFolded = result.fold((l) => l, (r) => r);
+        // Assert
+        verify(() => mockLocalDataSource.toggleFilmAsFavorite(
+            params: filmsParams, uid: "1")).called(1);
+        expect(result.isRight(), true);
+        expect(resultFolded, films.first);
+        expect(resultFolded, equals(films.first));
+      },
+    );
+
+    test(
+      'Should return a failure when toggled as favorite is unsuccessful',
+      () async {
+        // Arrange
+        when(
+          () => mockLocalDataSource.toggleFilmAsFavorite(
+              params: filmsParams, uid: "1"),
+        ).thenThrow(CacheException(message: 'Error'));
+        // Act
+        final result = await filmRepositoryImpl.toggleFilmAsFavorite(
+            uid: '1', params: filmsParams);
+        final resultFolded = result.fold((l) => l, (r) => r);
+        // Assert
+        verify(() => mockLocalDataSource.toggleFilmAsFavorite(
+            params: filmsParams, uid: "1")).called(1);
+        expect(result.isLeft(), true);
+        expect(resultFolded, CacheFailure(message: "Error"));
+      },
+    );
+  }));
 }

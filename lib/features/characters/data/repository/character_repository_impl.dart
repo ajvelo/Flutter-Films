@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_films/core/exception.dart';
 import 'package:flutter_films/core/extensions/character_model_ext.dart';
 import 'package:flutter_films/features/characters/data/datasources/character_local_datasource.dart';
@@ -26,7 +24,7 @@ class CharacterRepositoryImpl implements CharacterRepository {
           .map((characterModel) => characterModel.toCharacter)
           .toList();
       return Right(characters);
-    } on CacheException catch (e) {
+    } on CacheException catch (_) {
       final characterModels =
           await remoteDataSource.getCharacters(params: params);
       localDataSource.saveCharacters(

@@ -53,7 +53,7 @@ class FilmModel extends Equatable {
   @HiveField(14)
   bool isFavorite;
   @HiveField(15)
-  String uid;
+  final String uid;
 
   factory FilmModel.fromJson(Map<String, dynamic> json) => FilmModel(
       isFavorite: false,

@@ -1,11 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:hive/hive.dart';
 
-part 'properties_model.g.dart';
-
-@HiveType(typeId: 2)
-class PropertiesModel extends Equatable {
-  const PropertiesModel({
+class Properties extends Equatable {
+  const Properties({
     required this.height,
     required this.mass,
     required this.hairColor,
@@ -20,46 +16,18 @@ class PropertiesModel extends Equatable {
     required this.url,
   });
 
-  @HiveField(0)
   final String height;
-  @HiveField(1)
   final String mass;
-  @HiveField(2)
   final String hairColor;
-  @HiveField(3)
   final String skinColor;
-  @HiveField(4)
   final String eyeColor;
-  @HiveField(5)
   final String birthYear;
-  @HiveField(6)
   final String gender;
-  @HiveField(7)
   final DateTime created;
-  @HiveField(8)
   final DateTime edited;
-  @HiveField(9)
   final String name;
-  @HiveField(10)
   final String homeworld;
-  @HiveField(11)
   final String url;
-
-  factory PropertiesModel.fromJson(Map<String, dynamic> json) =>
-      PropertiesModel(
-        height: json["height"],
-        mass: json["mass"],
-        hairColor: json["hair_color"],
-        skinColor: json["skin_color"],
-        eyeColor: json["eye_color"],
-        birthYear: json["birth_year"],
-        gender: json["gender"],
-        created: DateTime.parse(json["created"]),
-        edited: DateTime.parse(json["edited"]),
-        name: json["name"],
-        homeworld: json["homeworld"],
-        url: json["url"],
-      );
 
   @override
   List<Object?> get props => [

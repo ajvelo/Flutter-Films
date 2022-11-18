@@ -28,7 +28,7 @@ void main() {
     when(() => mockDio.get(any())).thenAnswer((invocation) async => Response(
         requestOptions: RequestOptions(path: "/films", method: "GET"),
         statusCode: statusCode,
-        data: json.decode(fixture(fixtureName))));
+        data: json.decode(fixtureFilms(fixtureName))));
   }
 
   final filmparams = FilmsParams(path: '/films');
