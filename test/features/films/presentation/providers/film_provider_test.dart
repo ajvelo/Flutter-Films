@@ -64,10 +64,10 @@ void main() {
       'Initial state should be GetFilmInitial',
       () {
         // Arrange
-        final result = container.read(filmProvider);
+        final state = container.read(filmProvider);
         // Act
         // Assert
-        expect(result, equals(GetFilmsInitial()));
+        expect(state, equals(GetFilmsInitial()));
       },
     );
 
