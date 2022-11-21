@@ -46,7 +46,7 @@ class _$AppRouter extends RootStackRouter {
         routeData: routeData,
         child: CharacterDetailPage(
           key: args.key,
-          id: args.id,
+          character: args.character,
         ),
         transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
         opaque: true,
@@ -128,13 +128,13 @@ class CharacterHomeRouteArgs {
 class CharacterDetailRoute extends PageRouteInfo<CharacterDetailRouteArgs> {
   CharacterDetailRoute({
     Key? key,
-    required String id,
+    required Character character,
   }) : super(
           CharacterDetailRoute.name,
           path: '/character-detail-page',
           args: CharacterDetailRouteArgs(
             key: key,
-            id: id,
+            character: character,
           ),
         );
 
@@ -144,15 +144,15 @@ class CharacterDetailRoute extends PageRouteInfo<CharacterDetailRouteArgs> {
 class CharacterDetailRouteArgs {
   const CharacterDetailRouteArgs({
     this.key,
-    required this.id,
+    required this.character,
   });
 
   final Key? key;
 
-  final String id;
+  final Character character;
 
   @override
   String toString() {
-    return 'CharacterDetailRouteArgs{key: $key, id: $id}';
+    return 'CharacterDetailRouteArgs{key: $key, character: $character}';
   }
 }

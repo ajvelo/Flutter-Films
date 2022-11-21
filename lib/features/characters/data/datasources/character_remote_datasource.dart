@@ -25,7 +25,6 @@ class CharacterRemoteDatasourceImpl implements CharacterRemoteDatasource {
             final result = (response.data["result"]);
             final CharacterModel character = CharacterModel.fromJson(result);
             characterList.add(character);
-            print(characterList.length);
         }
       } catch (e) {
         log(e.toString());

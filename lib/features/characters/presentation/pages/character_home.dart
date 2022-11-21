@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_films/core/routes/app_router.dart';
 import 'package:flutter_films/features/characters/domain/usecases/character_usecase.dart';
 import 'package:flutter_films/features/characters/presentation/providers/character_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,7 +29,9 @@ class _CharacterHomePageState extends ConsumerState<CharacterHomePage> {
   Widget build(BuildContext context) {
     final state = ref.watch(characterProvider);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('Characters'),
+      ),
       body: SafeArea(child: Consumer(
         builder: (context, ref, child) {
           if (state is GetCharactersSuccess) {
@@ -39,6 +43,8 @@ class _CharacterHomePageState extends ConsumerState<CharacterHomePage> {
                 return ListTile(
                   onTap: () {
                     // Go to character
+                    AutoRouter.of(context)
+                        .push(CharacterDetailRoute(character: character));
                   },
                   title: Text(character.properties.name),
                   subtitle:

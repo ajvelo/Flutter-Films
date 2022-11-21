@@ -5,6 +5,8 @@ import 'package:flutter_films/features/characters/presentation/pages/character_d
 import 'package:flutter_films/features/characters/presentation/pages/character_home.dart';
 import 'package:flutter_films/features/films/presentation/pages/home_page.dart';
 
+import '../../features/characters/domain/entities/character.dart';
+
 part 'app_router.gr.dart';
 
 @MaterialAutoRouter(
