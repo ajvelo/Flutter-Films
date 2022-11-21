@@ -14,7 +14,7 @@ class HomePage extends ConsumerWidget {
     final state = ref.watch(filmsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Flutter Films')),
+      appBar: AppBar(title: const Text('Star Wars')),
       body: SafeArea(
         child: Consumer(
           builder: (context, ref, child) {
@@ -26,7 +26,9 @@ class HomePage extends ConsumerWidget {
                   return ListTile(
                     onTap: () {
                       AutoRouter.of(context).push(CharacterHomeRoute(
-                          characterUrls: film.characters, uid: film.uid));
+                          episodeNo: "${film.episodeId}",
+                          characterUrls: film.characters,
+                          uid: film.uid));
                     },
                     title: Text(film.title),
                     leading: IconButton(

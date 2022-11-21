@@ -31,6 +31,7 @@ class _$AppRouter extends RootStackRouter {
       return CustomPage<dynamic>(
         routeData: routeData,
         child: CharacterHomePage(
+          args.episodeNo,
           key: args.key,
           characterUrls: args.characterUrls,
           uid: args.uid,
@@ -88,6 +89,7 @@ class HomeRoute extends PageRouteInfo<void> {
 /// [CharacterHomePage]
 class CharacterHomeRoute extends PageRouteInfo<CharacterHomeRouteArgs> {
   CharacterHomeRoute({
+    required String episodeNo,
     Key? key,
     required List<String> characterUrls,
     required String uid,
@@ -95,6 +97,7 @@ class CharacterHomeRoute extends PageRouteInfo<CharacterHomeRouteArgs> {
           CharacterHomeRoute.name,
           path: '/character-home-page',
           args: CharacterHomeRouteArgs(
+            episodeNo: episodeNo,
             key: key,
             characterUrls: characterUrls,
             uid: uid,
@@ -106,10 +109,13 @@ class CharacterHomeRoute extends PageRouteInfo<CharacterHomeRouteArgs> {
 
 class CharacterHomeRouteArgs {
   const CharacterHomeRouteArgs({
+    required this.episodeNo,
     this.key,
     required this.characterUrls,
     required this.uid,
   });
+
+  final String episodeNo;
 
   final Key? key;
 
@@ -119,7 +125,7 @@ class CharacterHomeRouteArgs {
 
   @override
   String toString() {
-    return 'CharacterHomeRouteArgs{key: $key, characterUrls: $characterUrls, uid: $uid}';
+    return 'CharacterHomeRouteArgs{episodeNo: $episodeNo, key: $key, characterUrls: $characterUrls, uid: $uid}';
   }
 }
 

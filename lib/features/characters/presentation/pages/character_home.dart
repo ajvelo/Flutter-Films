@@ -8,7 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class CharacterHomePage extends ConsumerStatefulWidget {
   final List<String> characterUrls;
   final String uid;
-  const CharacterHomePage(
+  final String episodeNo;
+  const CharacterHomePage(this.episodeNo,
       {super.key, required this.characterUrls, required this.uid});
 
   @override
@@ -30,7 +31,7 @@ class _CharacterHomePageState extends ConsumerState<CharacterHomePage> {
     final state = ref.watch(characterProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Characters'),
+        title: Text('Appearing in episode ${widget.episodeNo}'),
       ),
       body: SafeArea(child: Consumer(
         builder: (context, ref, child) {
@@ -42,13 +43,12 @@ class _CharacterHomePageState extends ConsumerState<CharacterHomePage> {
                 final character = characters[index];
                 return ListTile(
                   onTap: () {
-                    // Go to character
                     AutoRouter.of(context)
                         .push(CharacterDetailRoute(character: character));
                   },
                   title: Text(character.properties.name),
                   subtitle:
-                      Text("Birthyear: ${character.properties.birthYear}"),
+                      Text("Birth Year: ${character.properties.birthYear}"),
                 );
               },
             );

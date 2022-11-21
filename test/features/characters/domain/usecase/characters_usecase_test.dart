@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter_films/core/extensions/character_model_ext.dart';
 import 'package:flutter_films/core/failure.dart';
