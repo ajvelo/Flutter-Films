@@ -104,11 +104,11 @@ As a result, the API will give the datasource a model, the repository will take 
 
 ### Testing
 
-To conclude our Clean Architecture implementation and check that it is robust, we must right unit tests, testing each module. Our objective is to accomplish the following goals:
+To conclude our Clean Architecture implementation and check that it is robust, we must write unit tests, testing each module. Our objective is to accomplish the following goals:
 
 1. Ensure that modules are discrete and decoupled.
 2. Verify the behaviour of our classes, data types and functions are working as intended.
 
-The file structure of our tests should mirror that of our Clean Architecture structure. That is, have a folder for data, domain and presentation, with the tests within. If the application contains several features, that it may be worth having a top-level `features/` folder for readability.
+The file structure of our tests should mirror that of our Clean Architecture structure. That is, have a folder for data, domain and presentation, with their associated subfolders within containing the tests. If the application contains several features, that it may be worth having a top-level `features/` folder for readability.
 
 The tests can be found <a href="https://github.com/ajvelo/Flutter-Films/tree/main/test/features">here</a>.
