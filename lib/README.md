@@ -14,7 +14,7 @@ Before Clean Architecture existed, there were several proposals detailing how to
 
 Clean Architecture is an attempt to unify these different approaches in a single actionable idea. It can best be illustrated by the image below.
 
-<img src="../../screenshots/clean-architecture-old.jpeg" alt="Screenshot" width="550" height="400">
+<img src="../screenshots/clean-architecture-old.jpeg" alt="Screenshot" width="550" height="400">
 
 The concentric circles within the image represent the different areas within software. The closer to the center, the higher-level the software becomes. Notice how the horizonal arrows only point inwards, this is because the sole principle behind Clean Architecture is known as the <a href="https://khalilstemmler.com/wiki/dependency-rule/">Dependency Rule</a>, which states the following:
 
@@ -29,7 +29,7 @@ The four circles illustrated in the diagram are schematic. There is no rule that
 
 Clean Architecture was conceptualised before Flutter came into existence. In addition, the diagram above relates to a general approach to developing software as opposed to focusing on a specific platform. Nonetheless, we can create our own Clean Architecture diagram and apply it specific to Flutter.
 
-<img src="../../screenshots/flutter-architecture.png" alt="Screenshot" width="500" height="500">
+<img src="../screenshots/flutter-architecture.png" alt="Screenshot" width="500" height="500">
 
 The first thing to note is we've parted ways with the concentric circles and instead introduced a linear call flow. However, like in the previous diagram, we can see that the Dependency Rule still applies. Our data sources return models, our repositories return entities which in turn is ultimately what will be displayed in our presentation layer.
 
@@ -80,5 +80,24 @@ class MyRepositoryImpl implements MyRepository {
 
 ### Consuming the entity in the presentation layer
 
-Once we have successfully returned our entity from the domain layer, we can call our usecase from any state management solution of our choosing to consume the entity within the our widgets. Since our usecase calls our repository expecting the same data type to be returned, we can *implement* it using the repository abstraction.
+Once we have successfully returned our entity from the repository, we can call our usecase from any state management solution of our choosing to consume the entity within the our widgets. Since our usecase calls our repository expecting the same data type to be returned, we can *implement* it using the repository abstraction. The only logic it'll have is simply returning the call from the repository.
 
+```dart
+class MyUsecase implements MyRepository {
+    final MyRepository repository;
+
+    MyUsecase({required this.repository});
+    @override
+    Future<MyEntity> getData() async {
+        return await repository.getData();
+    }
+}
+```
+
+As previously mentioned, the benefit of Clean Architecture is that modularization of the components means that you can easily swap one framework out for the other. For example, you could convert your BLoC solution to Riverpod, or you could exchange one Http client for another. Therefore, it does not matter what state management solution you use, only that it calls the usecase and returns the entity.
+
+Let's take the example we use in the project of calling an API to get a list of movies. When the user presses the button, the call flow will look something like this.
+
+`Widget (presentation) -> Riverpod (presentation) -> Usecase (domain) -> Repository (domain) -> Repository (data) -> Datasource (data) -> API`
+
+As a result, the API will give the datasource a model, the repository will take use that model to create an entity, and the entity will be given to the usecase, which'll ultimately be used in the widget.
