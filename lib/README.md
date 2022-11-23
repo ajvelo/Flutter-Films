@@ -27,7 +27,7 @@ The four circles illustrated in the diagram are schematic. There is no rule that
 
 ## Clean Architecture for Flutter
 
-Clean Architecture was conceptualised before Flutter came into existence. In addition, the diagram above relates to a general approach to developing software as opposed to focusing on a specific platform. Nonetheless, we can create our own Clean Architecture diagram and apply it specific to Flutter.
+Clean Architecture was conceptualised before Flutter came into existence. In addition, the diagram above relates to a general approach to developing software as opposed to focusing on a specific platform. Nonetheless, we can create our own Clean Architecture diagram and apply it specifically to Flutter.
 
 <img src="../screenshots/flutter-architecture.png" alt="Screenshot" width="500" height="500">
 
@@ -51,10 +51,10 @@ abstract class MyRepository {
 }
 ```
 
-Finally, we can implement this in our data layer. Note that our data layer (specifically our data sources) will return models, but our domain layer is only concerned with entities as that is what will be ultimately consumed in the presentation layer. We can achieve this using multiple ways but using an extension to map the model to the entity is perhaps the cleanest approach. 
+Finally, we can implement this in our data layer. Note that our data layer (specifically our data sources) will return models, but our domain layer is only concerned with entities as that is what will be ultimately consumed in the presentation layer. We can achieve this in multiple ways but using an extension to map the model to the entity is perhaps the cleanest approach. 
 
 ```dart
-extention DataModelExtension on DataModel {
+extension DataModelExtension on DataModel {
     MyEntity get toEntity => MyEntity(
         ...
     );
@@ -101,3 +101,14 @@ Let's take the example we use in the project of calling an API to get a list of 
 `Widget (presentation) -> Riverpod (presentation) -> Usecase (domain) -> Repository (domain) -> Repository (data) -> Datasource (data) -> API`
 
 As a result, the API will give the datasource a model, the repository will take use that model to create an entity, and the entity will be given to the usecase, which'll ultimately be used in the widget.
+
+### Testing
+
+To conclude our Clean Architecture implementation and check that it is robust, we must right unit tests, testing each module. Our objective is to accomplish the following goals:
+
+1. Ensure that modules are discrete and decoupled.
+2. Verify the behaviour of our classes, data types and functions are working as intended.
+
+The file structure of our tests should mirror that of our Clean Architecture structure. That is, have a folder for data, domain and presentation, with the tests within. If the application contains several features, that it may be worth having a top-level `features/` folder for readability.
+
+The tests can be found <a href="https://github.com/ajvelo/Flutter-Films/tree/main/test/features">here</a>.
