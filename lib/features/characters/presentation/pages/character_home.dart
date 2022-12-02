@@ -46,6 +46,7 @@ class _CharacterHomePageState extends ConsumerState<CharacterHomePage> {
                     AutoRouter.of(context)
                         .push(CharacterDetailRoute(character: character));
                   },
+                  trailing: const Icon(Icons.arrow_forward_ios_rounded),
                   title: Text(character.properties.name),
                   subtitle:
                       Text("Birth Year: ${character.properties.birthYear}"),

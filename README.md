@@ -59,8 +59,19 @@
 <div>
 <p align="center">
   <a href="https://github.com/ajvelo/Flutter-Films">
-      <img src="screenshots/android/android-home.png" alt="Screenshot" width="207" height="448">
-      <img src="screenshots/ios/ios-home.png" alt="Screenshot2" width="207" height="448">
+   <img src="screenshots/ios/ios-home.png" alt="Screenshot2" width="207" height="448">
+      <img src="screenshots/android/android-favorites.png" alt="Screenshot" width="207" height="448">
+     
+  </a>
+</p>
+</div>
+
+<div>
+<p align="center">
+ <img src="screenshots/ios/ios-characters.png" alt="Screenshot2" width="207" height="448">
+  <a href="https://github.com/ajvelo/Flutter-Films">
+      <img src="screenshots/android/android-character-properties.png" alt="Screenshot" width="207" height="448">
+     
   </a>
 </p>
 </div>

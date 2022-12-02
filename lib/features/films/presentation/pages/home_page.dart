@@ -30,6 +30,7 @@ class HomePage extends ConsumerWidget {
                           characterUrls: film.characters,
                           uid: film.uid));
                     },
+                    trailing: const Icon(Icons.arrow_forward_ios_rounded),
                     title: Text(film.title),
                     leading: IconButton(
                       icon: film.isFavorite
