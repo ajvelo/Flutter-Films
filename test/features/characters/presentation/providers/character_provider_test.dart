@@ -48,8 +48,7 @@ void main() {
       characterNotifier =
           NotifierProvider<CharacterNotifier, GetCharactersState>(
         () {
-          return CharacterNotifier(
-              usecase: mockCharacterUsecase, storedCharacters: []);
+          return CharacterNotifier(usecase: mockCharacterUsecase);
         },
       );
     },
