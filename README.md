@@ -96,8 +96,6 @@ With that said, this approach here is not meant for MVP applications but rather 
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
 * [Flutter](https://flutter.dev)
 
 ## Getting Started
