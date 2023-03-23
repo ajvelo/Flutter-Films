@@ -1,34 +1,39 @@
-// **************************************************************************
-// AutoRouteGenerator
-// **************************************************************************
-
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// AutoRouteGenerator
+// AutoRouterGenerator
 // **************************************************************************
-//
+
 // ignore_for_file: type=lint
+// coverage:ignore-file
 
 part of 'app_router.dart';
 
-class _$AppRouter extends RootStackRouter {
+abstract class _$AppRouter extends RootStackRouter {
   _$AppRouter([GlobalKey<NavigatorState>? navigatorKey]) : super(navigatorKey);
 
   @override
   final Map<String, PageFactory> pagesMap = {
     HomeRoute.name: (routeData) {
-      return CustomPage<dynamic>(
+      return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const HomePage(),
-        transitionsBuilder: TransitionsBuilders.fadeIn,
-        opaque: true,
-        barrierDismissible: false,
+      );
+    },
+    CharacterDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<CharacterDetailRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: CharacterDetailPage(
+          id: args.id,
+          key: args.key,
+          character: args.character,
+        ),
       );
     },
     CharacterHomeRoute.name: (routeData) {
       final args = routeData.argsAs<CharacterHomeRouteArgs>();
-      return CustomPage<dynamic>(
+      return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: CharacterHomePage(
           args.episodeNo,
@@ -36,53 +41,67 @@ class _$AppRouter extends RootStackRouter {
           characterUrls: args.characterUrls,
           uid: args.uid,
         ),
-        transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
-        opaque: true,
-        barrierDismissible: false,
-      );
-    },
-    CharacterDetailRoute.name: (routeData) {
-      final args = routeData.argsAs<CharacterDetailRouteArgs>();
-      return CustomPage<dynamic>(
-        routeData: routeData,
-        child: CharacterDetailPage(
-          key: args.key,
-          character: args.character,
-        ),
-        transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
-        opaque: true,
-        barrierDismissible: false,
       );
     },
   };
-
-  @override
-  List<RouteConfig> get routes => [
-        RouteConfig(
-          HomeRoute.name,
-          path: '/',
-        ),
-        RouteConfig(
-          CharacterHomeRoute.name,
-          path: '/character-home-page',
-        ),
-        RouteConfig(
-          CharacterDetailRoute.name,
-          path: '/character-detail-page',
-        ),
-      ];
 }
 
 /// generated route for
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
-  const HomeRoute()
+  const HomeRoute({List<PageRouteInfo>? children})
       : super(
           HomeRoute.name,
-          path: '/',
+          initialChildren: children,
         );
 
   static const String name = 'HomeRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [CharacterDetailPage]
+class CharacterDetailRoute extends PageRouteInfo<CharacterDetailRouteArgs> {
+  CharacterDetailRoute({
+    required String id,
+    Key? key,
+    required Character character,
+    List<PageRouteInfo>? children,
+  }) : super(
+          CharacterDetailRoute.name,
+          args: CharacterDetailRouteArgs(
+            id: id,
+            key: key,
+            character: character,
+          ),
+          rawPathParams: {'id': id},
+          initialChildren: children,
+        );
+
+  static const String name = 'CharacterDetailRoute';
+
+  static const PageInfo<CharacterDetailRouteArgs> page =
+      PageInfo<CharacterDetailRouteArgs>(name);
+}
+
+class CharacterDetailRouteArgs {
+  const CharacterDetailRouteArgs({
+    required this.id,
+    this.key,
+    required this.character,
+  });
+
+  final String id;
+
+  final Key? key;
+
+  final Character character;
+
+  @override
+  String toString() {
+    return 'CharacterDetailRouteArgs{id: $id, key: $key, character: $character}';
+  }
 }
 
 /// generated route for
@@ -93,18 +112,22 @@ class CharacterHomeRoute extends PageRouteInfo<CharacterHomeRouteArgs> {
     Key? key,
     required List<String> characterUrls,
     required String uid,
+    List<PageRouteInfo>? children,
   }) : super(
           CharacterHomeRoute.name,
-          path: '/character-home-page',
           args: CharacterHomeRouteArgs(
             episodeNo: episodeNo,
             key: key,
             characterUrls: characterUrls,
             uid: uid,
           ),
+          initialChildren: children,
         );
 
   static const String name = 'CharacterHomeRoute';
+
+  static const PageInfo<CharacterHomeRouteArgs> page =
+      PageInfo<CharacterHomeRouteArgs>(name);
 }
 
 class CharacterHomeRouteArgs {
@@ -126,39 +149,5 @@ class CharacterHomeRouteArgs {
   @override
   String toString() {
     return 'CharacterHomeRouteArgs{episodeNo: $episodeNo, key: $key, characterUrls: $characterUrls, uid: $uid}';
-  }
-}
-
-/// generated route for
-/// [CharacterDetailPage]
-class CharacterDetailRoute extends PageRouteInfo<CharacterDetailRouteArgs> {
-  CharacterDetailRoute({
-    Key? key,
-    required Character character,
-  }) : super(
-          CharacterDetailRoute.name,
-          path: '/character-detail-page',
-          args: CharacterDetailRouteArgs(
-            key: key,
-            character: character,
-          ),
-        );
-
-  static const String name = 'CharacterDetailRoute';
-}
-
-class CharacterDetailRouteArgs {
-  const CharacterDetailRouteArgs({
-    this.key,
-    required this.character,
-  });
-
-  final Key? key;
-
-  final Character character;
-
-  @override
-  String toString() {
-    return 'CharacterDetailRouteArgs{key: $key, character: $character}';
   }
 }

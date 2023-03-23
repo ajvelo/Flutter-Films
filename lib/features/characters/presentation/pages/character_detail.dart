@@ -1,11 +1,15 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/character.dart';
 import '../widgets/character_properties.dart';
 
+@RoutePage()
 class CharacterDetailPage extends StatelessWidget {
   final Character character;
-  const CharacterDetailPage({super.key, required this.character});
+  final String id;
+  const CharacterDetailPage(
+      {@PathParam('id') required this.id, super.key, required this.character});
   @override
   Widget build(BuildContext context) {
     final characterProperties = character.properties;

@@ -9,19 +9,21 @@ import '../../features/characters/domain/entities/character.dart';
 
 part 'app_router.gr.dart';
 
-@MaterialAutoRouter(
-  replaceInRouteName: 'Page,Route',
-  routes: <AutoRoute>[
+@AutoRouterConfig(replaceInRouteName: 'Page,Route')
+class AppRouter extends _$AppRouter {
+  @override
+  final List<AutoRoute> routes = [
     CustomRoute(
-        page: HomePage,
-        initial: true,
+        page: HomeRoute.page,
+        path: '/',
         transitionsBuilder: TransitionsBuilders.fadeIn),
     CustomRoute(
-        page: CharacterHomePage,
+        page: CharacterHomeRoute.page,
+        path: '/characters',
         transitionsBuilder: TransitionsBuilders.slideLeftWithFade),
     CustomRoute(
-        page: CharacterDetailPage,
+        page: CharacterDetailRoute.page,
+        path: '/characters/:id',
         transitionsBuilder: TransitionsBuilders.slideLeftWithFade),
-  ],
-)
-class AppRouter extends _$AppRouter {}
+  ];
+}

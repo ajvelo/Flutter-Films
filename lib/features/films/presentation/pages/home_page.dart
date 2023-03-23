@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/usecases/films_usecase.dart';
 import '../providers/film_provider.dart';
 
+@RoutePage()
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 

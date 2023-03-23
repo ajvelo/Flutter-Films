@@ -5,6 +5,7 @@ import 'package:flutter_films/features/characters/domain/usecases/character_usec
 import 'package:flutter_films/features/characters/presentation/providers/character_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+@RoutePage()
 class CharacterHomePage extends ConsumerStatefulWidget {
   final List<String> characterUrls;
   final String uid;
@@ -43,8 +44,8 @@ class _CharacterHomePageState extends ConsumerState<CharacterHomePage> {
                 final character = characters[index];
                 return ListTile(
                   onTap: () {
-                    AutoRouter.of(context)
-                        .push(CharacterDetailRoute(character: character));
+                    AutoRouter.of(context).push(CharacterDetailRoute(
+                        character: character, id: character.uid));
                   },
                   trailing: const Icon(Icons.arrow_forward_ios_rounded),
                   title: Text(character.properties.name),
