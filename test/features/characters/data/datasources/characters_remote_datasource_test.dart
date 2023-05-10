@@ -43,8 +43,9 @@ void main() {
           // Arrange
           setUpMockDio('character_model.json', 200);
           // Act
-          final result =
-              await characterRemoteDatasource.getCharacters(params: params);
+          final result = await characterRemoteDatasource
+              .getCharacters(params: params)
+              .toList();
           // Assert
           expect(result.first.properties.name, 'Luke Skywalker');
           expect(result.length, equals(1));
@@ -58,10 +59,12 @@ void main() {
           setUpMockDio('character_model.json', 400);
           // Act
           // Assert
-          expect(
-              () => characterRemoteDatasource.getCharacters(params: params),
-              throwsA((predicate((f) =>
-                  f is ServerException && f.message == "Server Error"))));
+          await expectLater(
+              () => characterRemoteDatasource
+                  .getCharacters(params: params)
+                  .toList(),
+              throwsA(predicate((p0) =>
+                  p0 is ServerException && p0.message == 'Server Error')));
         },
       );
     },

@@ -18,12 +18,12 @@ class CharacterRemoteDatasourceImpl implements CharacterRemoteDatasource {
     for (var url in params.path) {
       try {
         final response = await dio.get(url);
-        switch (response.statusCode) {
-          case 200:
-            final result = (response.data["result"]);
-            final CharacterModel character = CharacterModel.fromJson(result);
-            yield character;
-            break;
+        if (response.statusCode == 200) {
+          final result = (response.data["result"]);
+          final CharacterModel character = CharacterModel.fromJson(result);
+          yield character;
+        } else {
+          throw ServerException(message: 'Server Error');
         }
       } catch (e) {
         throw ServerException(message: 'Server Error');

@@ -43,6 +43,7 @@ class CharacterNotifier extends Notifier<GetCharactersState> {
 
   void getCharacters({required CharacterParams params}) async {
     state = GetCharactersLoading();
+    characters.clear();
     await for (final result in usecase.getCharacters(params: params)) {
       result.fold((failure) {
         state = GetCharactersError(errorMessage: _getErrorMessage(failure));

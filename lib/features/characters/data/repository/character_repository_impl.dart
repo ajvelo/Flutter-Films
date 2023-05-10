@@ -34,9 +34,8 @@ class CharacterRepositoryImpl implements CharacterRepository {
       try {
         await for (final characterModel
             in remoteDataSource.getCharacters(params: params)) {
-          final character = characterModel.toCharacter;
           characterModels.add(characterModel);
-          yield Right(character);
+          yield Right(characterModel.toCharacter);
         }
         await localDataSource.saveCharacters(
             characterModels: characterModels, params: params);
