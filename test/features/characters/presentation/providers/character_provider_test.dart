@@ -43,7 +43,7 @@ void main() {
       errorOrderOfStates = [
         GetCharactersInitial(),
         GetCharactersLoading(),
-        GetCharactersError(errorMessage: 'Error')
+        GetCharactersError(errorMessage: 'error')
       ];
       characterNotifier =
           NotifierProvider<CharacterNotifier, GetCharactersState>(
@@ -75,7 +75,9 @@ void main() {
           when(
             () =>
                 mockCharacterUsecase.getCharacters(params: mockCharacterParams),
-          ).thenAnswer((invocation) async => Right(characters));
+          ).thenAnswer((invocation) async* {
+            yield* Stream.fromIterable((characters.map((e) => Right(e))));
+          });
           // Act
           providerContainer
               .read(characterNotifier.notifier)
@@ -105,16 +107,17 @@ void main() {
           when(
             () =>
                 mockCharacterUsecase.getCharacters(params: mockCharacterParams),
-          ).thenAnswer((invocation) async => Right(characters));
+          ).thenAnswer((invocation) async* {
+            yield* Stream.fromIterable((characters.map((e) => Right(e))));
+          });
 
           // Act
           providerContainer
               .read(characterNotifier.notifier)
               .getCharacters(params: mockCharacterParams);
-          await untilCalled(
-            () =>
-                mockCharacterUsecase.getCharacters(params: mockCharacterParams),
-          );
+          await untilCalled(() =>
+              mockCharacterUsecase.getCharacters(params: mockCharacterParams));
+          await Future.delayed(Duration.zero);
 
           // Assert
           expect(orderOfStates, successOrderOfStates);
@@ -133,8 +136,10 @@ void main() {
           when(
             () =>
                 mockCharacterUsecase.getCharacters(params: mockCharacterParams),
-          ).thenAnswer(
-              (invocation) async => Left(ServerFailure(message: 'Error')));
+          ).thenAnswer((invocation) async* {
+            yield* Stream.fromIterable(
+                (characters.map((e) => Left(ServerFailure(message: 'error')))));
+          });
 
           // Act
           providerContainer
@@ -144,6 +149,7 @@ void main() {
             () =>
                 mockCharacterUsecase.getCharacters(params: mockCharacterParams),
           );
+          await Future.delayed(Duration.zero);
 
           // Assert
           expect(orderOfStates, errorOrderOfStates);
