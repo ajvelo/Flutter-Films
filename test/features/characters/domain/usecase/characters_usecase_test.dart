@@ -36,15 +36,20 @@ void main() {
         () async {
           // Arrange
           when(() => mockCharacterRepository.getCharacters(
-                  params: characterParams))
-              .thenAnswer((invocation) async => Right(characters));
+              params: characterParams)).thenAnswer((invocation) async* {
+            yield* Stream.fromIterable((characters.map((e) => Right(e))));
+          });
           // Act
-          final result =
-              await characterUsecase.getCharacters(params: characterParams);
-          final resultFolded = result.fold((l) => l, (r) => r);
+          final result = await characterUsecase
+              .getCharacters(params: characterParams)
+              .toList();
+          final resultFolded = result
+              .map(
+                (e) => e.fold((l) => l, (r) => r),
+              )
+              .toList();
           // Assert
-          expect(result.isRight(), true);
-          expect(result, Right(characters));
+          expect(result.every((element) => element.isRight()), true);
           expect(resultFolded, characters);
           verify(
             () =>
@@ -58,18 +63,23 @@ void main() {
         'Should return failure if unsuccessful',
         () async {
           // Arrange
-
           when(() => mockCharacterRepository.getCharacters(
-                  params: characterParams))
-              .thenAnswer((invocation) async => Left(serverFailure));
+              params: characterParams)).thenAnswer((invocation) async* {
+            yield* Stream.fromIterable(
+                (characters.map((e) => Left(serverFailure))));
+          });
           // Act
-          final result =
-              await characterUsecase.getCharacters(params: characterParams);
-          final resultFolded = result.fold((l) => l, (r) => r);
+          final result = await characterUsecase
+              .getCharacters(params: characterParams)
+              .toList();
+          final resultFolded = result
+              .map(
+                (e) => e.fold((l) => l, (r) => r),
+              )
+              .toList();
           // Assert
-          expect(result.isLeft(), true);
-          expect(result, Left(serverFailure));
-          expect(resultFolded, serverFailure);
+          expect(result.every((element) => element.isLeft()), true);
+          expect(resultFolded, List.filled(characters.length, serverFailure));
           verify(
             () =>
                 mockCharacterRepository.getCharacters(params: characterParams),

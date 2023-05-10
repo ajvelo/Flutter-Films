@@ -52,17 +52,19 @@ void main() {
                   params: characterParams)))
               .thenAnswer((invocation) async => characterModels);
           // Act
-          final result =
-              await characterRepository.getCharacters(params: characterParams);
-          final resultFolded = result.fold((l) => l, (r) => r);
+          final result = await characterRepository
+              .getCharacters(params: characterParams)
+              .toList();
           // Assert
           verify(
             () => mockCharacterLocalDataSource.getCharacters(
                 params: characterParams),
           ).called(1);
-          expect(result.isRight(), true);
-          expect(resultFolded, characters);
-          expect(resultFolded, equals(characters));
+          expect(result.length, characters.length);
+          expect(result.every((element) => element.isRight()), true);
+          expect(
+              result.map((event) => event.fold((l) => null, (r) => r)).toList(),
+              characters);
         },
       );
 
@@ -74,12 +76,16 @@ void main() {
                   params: characterParams)))
               .thenThrow(CacheException(message: 'Error'));
           when((() => mockCharacterRemoteDataSource.getCharacters(
-                  params: characterParams)))
-              .thenAnswer((invocation) async => characterModels);
+              params: characterParams))).thenAnswer((invocation) async* {
+            yield* Stream.fromIterable(characterModels);
+          });
           // Act
-          final result =
-              await characterRepository.getCharacters(params: characterParams);
-          final resultFolded = result.fold((l) => l, (r) => r);
+          final result = await characterRepository
+              .getCharacters(params: characterParams)
+              .toList();
+          final resultFolded = result.map(
+            (e) => e.fold((l) => null, (r) => r),
+          );
           // Assert
           verify(
             () => mockCharacterLocalDataSource.getCharacters(
@@ -93,7 +99,7 @@ void main() {
             () => mockCharacterRemoteDataSource.getCharacters(
                 params: characterParams),
           ).called(1);
-          expect(result.isRight(), true);
+          expect(result.every((element) => element.isRight()), true);
           expect(resultFolded, characters);
           expect(resultFolded, equals(characters));
         },
