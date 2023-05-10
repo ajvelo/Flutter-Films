@@ -15,8 +15,8 @@ class CharacterUsecase implements CharacterRepository {
   CharacterUsecase({required this.repository});
 
   @override
-  Future<Either<Failure, List<Character>>> getCharacters(
-      {required CharacterParams params}) async {
-    return await repository.getCharacters(params: params);
+  Stream<Either<Failure, Character>> getCharacters(
+      {required CharacterParams params}) {
+    return repository.getCharacters(params: params);
   }
 }

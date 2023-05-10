@@ -12,23 +12,21 @@ import '../../../../core/failure.dart';
 
 final characterProvider =
     NotifierProvider<CharacterNotifier, GetCharactersState>(() {
-  return CharacterNotifier(
+  final characterNotifier = CharacterNotifier(
     usecase: CharacterUsecase(
         repository: CharacterRepositoryImpl(
             localDataSource: CharacterLocalDataSourceImpl(
                 characterHiveHelper: CharacterHiveHelper()),
             remoteDataSource: CharacterRemoteDatasourceImpl(dio: Dio()))),
   );
+  return characterNotifier;
 });
 
 class CharacterNotifier extends Notifier<GetCharactersState> {
   final CharacterUsecase usecase;
-  CharacterNotifier({required this.usecase}) : super();
+  final List<Character> characters = [];
 
-  @override
-  GetCharactersState build() {
-    return GetCharactersInitial();
-  }
+  CharacterNotifier({required this.usecase}) : super();
 
   String _getErrorMessage(Failure failure) {
     switch (failure.runtimeType) {
@@ -45,17 +43,22 @@ class CharacterNotifier extends Notifier<GetCharactersState> {
 
   void getCharacters({required CharacterParams params}) async {
     state = GetCharactersLoading();
-    final results = await usecase.getCharacters(params: params);
-    results.fold((failure) {
-      state = GetCharactersError(errorMessage: _getErrorMessage(failure));
-    }, (characters) {
-      characters.sort(
-        (a, b) {
+    await for (final result in usecase.getCharacters(params: params)) {
+      result.fold((failure) {
+        state = GetCharactersError(errorMessage: _getErrorMessage(failure));
+      }, (character) {
+        characters.add(character);
+        characters.sort((a, b) {
           return a.properties.name.compareTo(b.properties.name);
-        },
-      );
-      state = GetCharactersSuccess(characters: characters);
-    });
+        });
+        state = GetCharactersSuccess(characters: characters);
+      });
+    }
+  }
+
+  @override
+  GetCharactersState build() {
+    return GetCharactersInitial();
   }
 }
 

@@ -1,22 +1,20 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_films/core/exception.dart';
 import 'package:flutter_films/features/characters/data/models/character_model.dart';
 import 'package:flutter_films/features/characters/domain/usecases/character_usecase.dart';
 
 abstract class CharacterRemoteDatasource {
-  Future<List<CharacterModel>> getCharacters({required CharacterParams params});
+  Stream<CharacterModel> getCharacters({required CharacterParams params});
 }
 
 class CharacterRemoteDatasourceImpl implements CharacterRemoteDatasource {
   final Dio dio;
 
   CharacterRemoteDatasourceImpl({required this.dio});
+
   @override
-  Future<List<CharacterModel>> getCharacters(
-      {required CharacterParams params}) async {
-    List<CharacterModel> characterList = [];
+  Stream<CharacterModel> getCharacters(
+      {required CharacterParams params}) async* {
     for (var url in params.path) {
       try {
         final response = await dio.get(url);
@@ -24,16 +22,12 @@ class CharacterRemoteDatasourceImpl implements CharacterRemoteDatasource {
           case 200:
             final result = (response.data["result"]);
             final CharacterModel character = CharacterModel.fromJson(result);
-            characterList.add(character);
+            yield character;
+            break;
         }
       } catch (e) {
-        log(e.toString());
+        throw ServerException(message: 'Server Error');
       }
-    }
-    if (characterList.isEmpty) {
-      throw ServerException(message: 'Server Error');
-    } else {
-      return characterList;
     }
   }
 }
