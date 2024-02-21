@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class CharacterProperties extends StatelessWidget {
   const CharacterProperties({
-    Key? key,
+    super.key,
     required this.propertyValue,
     required this.propertyType,
-  }) : super(key: key);
+  });
 
   final String propertyValue;
   final String propertyType;
